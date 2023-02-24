@@ -492,28 +492,13 @@ var Theme = /*#__PURE__*/function () {
 
         if ($codeElements.length) {
           var $code = $codeElements[$codeElements.length - 1];
-          var $header = document.createElement('div');
-          $header.className = 'code-header ' + $code.className.toLowerCase();
-          var $title = document.createElement('span');
-          $title.classList.add('code-title');
-          $title.insertAdjacentHTML('afterbegin', '<i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i>');
-          $title.addEventListener('click', function () {
-            $chroma.classList.toggle('open');
-          }, false);
-          $header.appendChild($title);
-          var $ellipses = document.createElement('span');
-          $ellipses.insertAdjacentHTML('afterbegin', '<i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i>');
-          $ellipses.classList.add('ellipses');
-          $ellipses.addEventListener('click', function () {
-            $chroma.classList.add('open');
-          }, false);
-          $header.appendChild($ellipses);
-          var $copy = document.createElement('span');
-          $copy.insertAdjacentHTML('afterbegin', '<i class="far fa-copy fa-fw" aria-hidden="true"></i>');
-          $copy.classList.add('copy');
           var code = $code.innerText;
           if (_this5.config.code.maxShownLines < 0 || code.split('\n').length < _this5.config.code.maxShownLines + 2) $chroma.classList.add('open');
 
+          var $copy = document.createElement('span');
+          $copy.insertAdjacentHTML('afterbegin', '<i class="far fa-copy fa-fw" aria-hidden="true"></i>');
+          $copy.classList.add('copy');
+          $chroma.insertBefore($copy, $chroma.firstChild);
           if (_this5.config.code.copyTitle) {
             $copy.setAttribute('data-clipboard-text', code);
             $copy.title = _this5.config.code.copyTitle;
@@ -521,10 +506,7 @@ var Theme = /*#__PURE__*/function () {
             clipboard.on('success', function (_e) {
               _this5.util.animateCSS($code, 'animate__flash');
             });
-            $header.appendChild($copy);
           }
-
-          $chroma.insertBefore($header, $chroma.firstChild);
         }
       });
     }
